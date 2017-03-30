@@ -5,10 +5,15 @@ class ApplicationController < ActionController::Base
   
   before_filter :count_requests
 
+  around_filter do |controller, action|
+    $request_duration.observe({}, Benchmark.realtime { action.call })
+  end
+
   protected
   def count_requests
     $request_count.increment()
   end
+
 
   private
   

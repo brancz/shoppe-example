@@ -36,6 +36,9 @@ module ExampleStore
       $request_count = Prometheus::Client::Counter.new(:site_requests_total, 'Total number of HTTP requests handled by Rails')
       $prometheus.register($request_count)
 
+      $request_duration = Prometheus::Client::Summary.new(:request_duration, 'Duration of handling a call in Rails')
+      $prometheus.register($request_duration)
+
       rails_up.set({app: "Shoppe"}, 1)
     end
   end
