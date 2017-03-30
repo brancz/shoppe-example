@@ -15,3 +15,5 @@ gem 'thin'
 group :development do
   gem 'capistrano'
 end
+
+gem 'prometheus-client', '~> 0.7.0.pre.rc.1'
