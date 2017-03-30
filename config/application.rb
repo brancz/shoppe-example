@@ -29,8 +29,13 @@ module ExampleStore
 
     config.after_initialize do
 	    $prometheus = Prometheus::Client.registry
+
       rails_up = Prometheus::Client::Gauge.new(:app_running, 'Rails app has started')
       $prometheus.register(rails_up)
+
+      $request_count = Prometheus::Client::Counter.new(:site_requests_total, 'Total number of HTTP requests handled by Rails')
+      $prometheus.register($request_count)
+
       rails_up.set({app: "Shoppe"}, 1)
     end
   end

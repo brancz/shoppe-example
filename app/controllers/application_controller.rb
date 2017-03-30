@@ -3,6 +3,13 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
+  before_filter :count_requests
+
+  protected
+  def count_requests
+    $request_count.increment()
+  end
+
   private
   
   # Returns the active order for this session
