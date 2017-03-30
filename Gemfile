@@ -11,6 +11,8 @@ gem 'redcarpet'
 gem 'faker'
 gem 'shoppe'
 gem 'thin'
+gem 'pg'
+gem 'prometheus-client', '~> 0.7.0.pre.rc.1'
 
 group :development do
   gem 'capistrano'

@@ -1,0 +1,32 @@
+version: '2'
+services:
+  # db:
+  #   image: mysql:5
+  #   environment:
+  #     MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  #     MYSQL_DATABASE: workshop
+  prometheus:
+    image:  quay.io/prometheus/prometheus:v1.5.2
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+  db:
+    image: postgres:9.4
+    volumes:
+      - /var/lib/postgresql/data/
+    ports:
+      - "5432"
+  shop-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      # - db
+      - prometheus
+    links:
+      - db:db
